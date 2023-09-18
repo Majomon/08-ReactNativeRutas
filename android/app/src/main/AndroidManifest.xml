@@ -1,6 +1,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
-
+    <!-- Por si la aplicacion necesita acceso a internet -->
     <uses-permission android:name="android.permission.INTERNET" />
+    <!-- Si necesito que la aplicacion cuando este en segundo plano siga obteniendo información -->
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
       android:name=".MainApplication"
