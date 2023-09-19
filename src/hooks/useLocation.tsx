@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import {useEffect, useState, useRef} from 'react';
 import Geolocation from '@react-native-community/geolocation';
 import {Location} from '../interfaces/appInterfaces';
 
@@ -9,6 +9,8 @@ export const useLocation = () => {
     latitude: 0,
     longitude: 0,
   });
+  //Para cuando toque el mapa
+  const watchId = useRef<number>();
 
   useEffect(() => {
     getCurrentLocation().then(location => {
@@ -34,7 +36,7 @@ export const useLocation = () => {
   };
 
   const followUserLocation = () => {
-    Geolocation.watchPosition(
+    watchId.current = Geolocation.watchPosition(
       ({coords}) => {
         console.log(coords);
         setUserLocation({
@@ -47,11 +49,18 @@ export const useLocation = () => {
     );
   };
 
+  const stopFollowUserLocation = () => {
+    if (watchId.current) {
+      Geolocation.clearWatch(watchId.current!);
+    }
+  };
+
   return {
     hasLocation,
     initialPosition,
     getCurrentLocation,
     followUserLocation,
     userLocation,
+    stopFollowUserLocation,
   };
 };

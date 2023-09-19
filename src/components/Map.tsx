@@ -13,18 +13,22 @@ export const Map = () => {
     getCurrentLocation,
     followUserLocation,
     userLocation,
+    stopFollowUserLocation,
   } = useLocation();
   const mapViewRef = useRef<MapView>();
+  const following = useRef<boolean>(true);
 
   useEffect(() => {
     followUserLocation();
     return () => {
       //Cancelar el seguimiento
+      stopFollowUserLocation();
     };
   }, []);
 
   //Cada que cambie la ubicacion del usuario me muevo a su ubicacion
   useEffect(() => {
+    if (!following) return;
     const {latitude, longitude} = userLocation;
     mapViewRef.current?.animateCamera({
       center: {
@@ -37,6 +41,8 @@ export const Map = () => {
   const centerPosition = async () => {
     //const location = await getCurrentLocation();
     const {latitude, longitude} = await getCurrentLocation();
+
+    following.current = true;
     mapViewRef.current?.animateCamera({
       center: {
         latitude,
@@ -57,26 +63,13 @@ export const Map = () => {
         style={styles.map}
         //Da error al cargar la aplicacion, ademas no muestra el icono marcando la ubicación del usuario
         //showsUserLocation
-
         initialRegion={{
           latitude: initialPosition!.latitude,
           longitude: initialPosition!.longitude,
           latitudeDelta: 0.015,
           longitudeDelta: 0.0121,
-        }}>
-        {/* Marcador de la libreria  */}
-        {/*       <Marker
-      image={require("../assets/marcaror.png")}
-        // Si lo hacemos en base a un Array
-        // key={index}
-        coordinate={{
-          latitude: 37.78825,
-          longitude: -122.4324,
         }}
-        title="Esto es un títutlo"
-        description="Esto es la descripción del marcador"
-      /> */}
-      </MapView>
+        onTouchStart={() => (following.current = false)}></MapView>
       <Fab
         iconName="compass-outline"
         onPress={() => centerPosition()}
@@ -96,3 +89,20 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 });
+
+{
+  /* Marcador de la libreria  */
+}
+{
+  /*       <Marker
+      image={require("../assets/marcaror.png")}
+        // Si lo hacemos en base a un Array
+        // key={index}
+        coordinate={{
+          latitude: 37.78825,
+          longitude: -122.4324,
+        }}
+        title="Esto es un títutlo"
+        description="Esto es la descripción del marcador"
+      /> */
+}
