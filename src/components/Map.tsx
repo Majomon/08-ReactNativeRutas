@@ -8,6 +8,7 @@ export const Map = () => {
       <MapView
         provider={PROVIDER_GOOGLE}
         style={styles.map}
+        showsUserLocation={true}
         initialRegion={{
           latitude: 37.78825,
           longitude: -122.4324,
@@ -16,7 +17,6 @@ export const Map = () => {
         }}
       />
 
-      
       {/* Marcador de la libreria  */}
       {/*       <Marker
       image={require("../assets/marcaror.png")}
