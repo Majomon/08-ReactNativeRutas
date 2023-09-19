@@ -1,10 +1,21 @@
 import React from 'react';
-import {Text, View} from 'react-native';
+import {Text, View, StyleSheet} from 'react-native';
 
 export const MapScreen = () => {
   return (
-    <View>
-      <Text>MapScreen</Text>
+    <View style={styles.container}>
+      <Text style={styles.text}>MapScreen</Text>
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  text: {
+    color: 'black',
+  },
+});
