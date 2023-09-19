@@ -1,18 +1,11 @@
 import React from 'react';
-import {Text, View, StyleSheet} from 'react-native';
-import MapView from 'react-native-maps';
+import {StyleSheet, View} from 'react-native';
+import {Map} from '../components/Map';
 
 export const MapScreen = () => {
   return (
     <View style={styles.container}>
-      <MapView
-        style={styles.map}
-        region={{
-          latitude: 37.78825,
-          longitude: -122.4324,
-          latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421,
-        }}></MapView>
+      <Map />
     </View>
   );
 };
@@ -20,12 +13,7 @@ export const MapScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    height: 400,
-    width: 400,
-    justifyContent: 'flex-end',
+    justifyContent: 'center',
     alignItems: 'center',
-  },
-  map: {
-    ...StyleSheet.absoluteFillObject,
   },
 });

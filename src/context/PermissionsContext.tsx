@@ -33,6 +33,7 @@ export const PermissionsProvider = ({children}: any) => {
 
   //Para cuando abra la aplicación haga primero este chekeo
   useEffect(() => {
+    checkLocationPermission();
     AppState.addEventListener('change', state => {
       if (state !== 'active') return;
       checkLocationPermission();
