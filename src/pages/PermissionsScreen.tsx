@@ -1,24 +1,16 @@
-import React from 'react';
-import {StyleSheet, Text, View, Button} from 'react-native';
-import {check,request, PERMISSIONS, PermissionStatus} from 'react-native-permissions';
+import React, {useContext} from 'react';
+import {Button, StyleSheet, Text, View} from 'react-native';
+import {PermissionsContext} from '../context/PermissionsContext';
 
 export const PermissionsScreen = () => {
-  const checkLocationPermission = async () => {
-    let permissionStatus: PermissionStatus;
-
-    //Para ver si tengo o no permisos
-    //permissionStatus = await check(PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION);
-
-    // Para pedir permisos
-    permissionStatus = await request(PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION);
-
-    console.log({permissionStatus});
-  };
+  const {permissions, askLocationPermission} = useContext(PermissionsContext);
 
   return (
     <View style={styles.container}>
       <Text style={styles.text}>Permissions Screen</Text>
-      <Button title="Permiso" onPress={checkLocationPermission} />
+      <Button title="Permiso" onPress={askLocationPermission} />
+
+      <Text style={styles.text}>{JSON.stringify(permissions, null, 5)}</Text>
     </View>
   );
 };
