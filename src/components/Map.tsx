@@ -1,6 +1,6 @@
 import React, {useRef} from 'react';
-import {StyleSheet, View} from 'react-native';
-import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
+import {StyleSheet, View, Image} from 'react-native';
+import MapView, {Marker, PROVIDER_GOOGLE, Polyline} from 'react-native-maps';
 import {useLocation} from '../hooks/useLocation';
 import {LoadingScreen} from '../pages/LoadingScreen';
 import {Fab} from './Fab';
@@ -14,6 +14,7 @@ export const Map = () => {
     followUserLocation,
     userLocation,
     stopFollowUserLocation,
+    routeLines,
   } = useLocation();
   const mapViewRef = useRef<MapView>();
   const following = useRef<boolean>(true);
@@ -69,7 +70,29 @@ export const Map = () => {
           latitudeDelta: 0.015,
           longitudeDelta: 0.0121,
         }}
-        onTouchStart={() => (following.current = false)}></MapView>
+        onTouchStart={() => (following.current = false)}>
+        <Polyline
+          coordinates={routeLines}
+          strokeColor="black"
+          strokeWidth={3}
+        />
+        {/* Agrega un Marker en la posición del usuario */}
+        {/*       {userLocation && (
+          <Marker
+            coordinate={{
+              latitude: userLocation.latitude,
+              longitude: userLocation.longitude,
+            }}>
+            <View style={styles.customMarker}>
+              <Image
+                source={require('../assets/marcaror.png')}
+                style={styles.markerImage}
+              />
+            </View>
+          </Marker>
+        )} */}
+      </MapView>
+
       <Fab
         iconName="compass-outline"
         onPress={() => centerPosition()}
@@ -87,6 +110,15 @@ const styles = StyleSheet.create({
   },
   map: {
     flex: 1,
+  },
+  customMarker: {
+    alignItems: 'center', // Centrar horizontalmente la imagen
+    justifyContent: 'center', // Centrar verticalmente la imagen
+  },
+  markerImage: {
+    width: 42, // Ancho de la imagen
+    height: 42, // Altura de la imagen
+    resizeMode: 'contain', // Ajustar la imagen dentro del contenedor
   },
 });
 
