@@ -80,7 +80,7 @@ export const Map = () => {
           />
         )}
         {/* Agrega un Marker en la posición del usuario */}
-        {/*       {userLocation && (
+        {userLocation && (
           <Marker
             coordinate={{
               latitude: userLocation.latitude,
@@ -93,7 +93,7 @@ export const Map = () => {
               />
             </View>
           </Marker>
-        )} */}
+        )}
       </MapView>
 
       <Fab
